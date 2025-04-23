@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.Collectors; // Java 8 and above
 
-public class PlaylistColls {
+public class PlaylistVars {
 
     public static abstract class Item {
         public final float length_secs;
@@ -69,55 +69,14 @@ public class PlaylistColls {
         List<Item> playlist1 = Arrays.asList(new Item[] { piece1, advert1, piece2 });
         System.out.printf("playlist1 = %s\n", playlist1);
 
-        // use mapping to extract all lengths from playlist1:
-        List<Float> lengths1 = new ArrayList<>();
-        for (Item item : playlist1) {
-            lengths1.add(item.length_secs);
+        // calculate the overall length of playlist1:
+        Float length1 = 0f; // TASK: related to the scope of variable "length1"
+        for (final Item item : playlist1) { // TASK: related to the lifetimes of the variable "item"
+            length1 = length1 + item.length_secs;
         }
 
-        System.out.printf("lengths1 = %s\n", lengths1);
-
-        // an equivalent of the above, using Java 8 streams:
-        List<Float> lengths1_streams = playlist1.stream()
-                .map(e -> e.length_secs)
-                .collect(Collectors.toList());
-
-        System.out.printf("lengths1_streams = %s\n", lengths1_streams);
-
-        // use filtering to remove adverts:
-        List<Item> playlist1noAds = new ArrayList<>();
-        for (Item item : playlist1) {
-            if (!(item instanceof Advert)) {
-                playlist1noAds.add(item);
-            }
-        }
-
-        System.out.printf("playlist1noAds = %s\n", playlist1noAds);
-
-        // an equivalent of the above, using Java 8 streams:
-        List<Item> playlist1noAds_streams = playlist1.stream()
-                .filter(e -> !(e instanceof Advert))
-                .collect(Collectors.toList());
-
-        System.out.printf("playlist1noAds_streams = %s\n", playlist1noAds_streams);
-
-        List<Float> shortItemLengths1 = new ArrayList<>();
-        // TASK 6.2(b)...
-
-
-
-
-
-
-        System.out.printf("shortItemLengths1 = %s\n", shortItemLengths1);
+        System.out.printf("length1 = %.2f", length1);
 
         System.out.println();
-
-        // Optional TASK:
-        Map<Piece, Float> pieceToScoreA = new HashMap<>();
-        pieceToScoreA.put(piece1, 10.0f);
-        // pieceToScoreA.put(piece2, "dunno");
-        System.out.format("pieceToScore = %s\n", pieceToScoreA);
-        System.out.format("piece1's score = %s\n", pieceToScoreA.get(piece1));
-    }
+   }
 }

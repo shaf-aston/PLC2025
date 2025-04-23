@@ -1,4 +1,4 @@
-module Main where
+module PlaylistVars where
 
 import Text.Printf
 
@@ -40,32 +40,20 @@ instance (Show Item) where
     show (Advert product len) =
         printf "Advert for %s (%.1fs)" (show product) len
 
-piece1 = Piece "Moonlight" "C. Arrau" (17*60+26)
-piece2 = Piece "Pathetique" "D. Barenboim" (16*60+49)
-advert1 = Advert (Product "Bounty" "Mars") 15
-
 playlist1 = [piece1, advert1, piece2]
+    where
+    piece1  = Piece "Moonlight" "C. Arrau"       (17*minutes+26*seconds)
+    piece2  = Piece "Pathetique" "D. Barenboim"  (16*minutes+49*seconds)
+    advert1 = Advert (Product "chocolate" "Yummm")          (15*seconds)
+    minutes = 60*seconds -- TASK: identify the scope of variable "minutes"
+    seconds = 1
 
-lengths1 = [ item_length_secs item | item <- playlist1 ]
+length1 = sum [ item_length_secs item | item <- playlist1 ]
+    -- OPTIONAL TASK: identify the scope of variable "item" above
 
-playlist1noAds = [ item | item <- playlist1, not (isAdvert item) ]
-
-playlist2 = [piece2, advert1]
-
-playlists = [playlist1, playlist2] -- a list of lists
-
-adsFromPlaylists = "todo" -- TASK 6.4(b)
-
-shortItemLenghts1 = "todo" -- TASK 6.4(a)
-
+main :: IO ()
 main =
     do
     printf "playlist1 = %s\n" (show playlist1)
-    printf "lenghts1 = %s\n" (show lengths1)
-    printf "playlist1noAds = %s\n" (show playlist1noAds)
-    printf "shortItemLenghts1 = %s\n" (show shortItemLenghts1)
-    putStrLn ""
-    printf "playlist2 = %s\n" (show playlist2)
-    printf "playlists = %s\n" (show playlists)
-    printf "adsFromPlaylists = %s\n" (show adsFromPlaylists)
+    printf "lenght1 = %s\n" (show length1)
 
